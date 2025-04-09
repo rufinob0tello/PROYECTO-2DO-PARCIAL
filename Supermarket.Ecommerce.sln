@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Supermarket.Ecommerce.Core", "Supermarket.Ecommerce.Core\Supermarket.Ecommerce.Core.csproj", "{EA006264-5093-4B0F-91E5-B563C9F5149B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Supermarket.Ecommerce.Api", "Supermarket.Ecommerce.Api\Supermarket.Ecommerce.Api.csproj", "{2C7D5228-A87C-43AE-8549-0F357604D9ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA006264-5093-4B0F-91E5-B563C9F5149B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA006264-5093-4B0F-91E5-B563C9F5149B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA006264-5093-4B0F-91E5-B563C9F5149B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA006264-5093-4B0F-91E5-B563C9F5149B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C7D5228-A87C-43AE-8549-0F357604D9ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C7D5228-A87C-43AE-8549-0F357604D9ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C7D5228-A87C-43AE-8549-0F357604D9ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C7D5228-A87C-43AE-8549-0F357604D9ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

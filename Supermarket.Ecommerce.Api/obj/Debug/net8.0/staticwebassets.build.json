@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "wL2Ij9VdDKEcwV08fwp0sIx/1I3WCEY5cQ6bZ75zE8Q=",
+  "Source": "Supermarket.Ecommerce.Api",
+  "BasePath": "_content/Supermarket.Ecommerce.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
