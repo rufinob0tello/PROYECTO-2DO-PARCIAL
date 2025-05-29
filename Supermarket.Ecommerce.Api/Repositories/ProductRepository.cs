@@ -29,23 +29,21 @@ public class ProductRepository : IProductRepository
 
     public async Task<List<Product>> GetAllAsync()
     {
-        const string sql = "SELECT * FROM Product WHERE IsDeleted = 0";
-        var result = await _dbContext.Connection.QueryAsync<Product>(sql);
-        return result.ToList();
-    }
-
-    public async Task<Product> GetById(int id)
-    {
-        var product = await _dbContext.Connection.GetAsync<Product>(id);
-        return product == null || product.IsDeleted ? null : product;
+        const string sql = "SELECT * FROM Product";
+        var products = await _dbContext.Connection.QueryAsync<Product>(sql);
+        return products.ToList();
     }
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var product = await GetById(id);
-        if (product == null) return false;
+        const string sql = "DELETE FROM Product WHERE Id = @Id";
+        var affectedRows = await _dbContext.Connection.ExecuteAsync(sql, new { Id = id });
+        return affectedRows > 0;
+    }
 
-        product.IsDeleted = true;
-        return await _dbContext.Connection.UpdateAsync(product);
+    public async Task<Product> GetById(int id)
+    {
+        const string sql = "SELECT * FROM Product WHERE Id = @Id";
+        return await _dbContext.Connection.QueryFirstOrDefaultAsync<Product>(sql, new { Id = id });
     }
 }

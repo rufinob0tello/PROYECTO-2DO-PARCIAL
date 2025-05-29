@@ -9,3 +9,5 @@ C:\Universidad\Octavo semestre\Desarrollo web multi plantaforma\2do Parcial\Defi
 C:\Universidad\Octavo semestre\Desarrollo web multi plantaforma\2do Parcial\Definitivo\Supermarket.Ecommerce\Supermarket.Ecommerce.Core\obj\Debug\net8.0\refint\Supermarket.Ecommerce.Core.dll
 C:\Universidad\Octavo semestre\Desarrollo web multi plantaforma\2do Parcial\Definitivo\Supermarket.Ecommerce\Supermarket.Ecommerce.Core\obj\Debug\net8.0\Supermarket.Ecommerce.Core.pdb
 C:\Universidad\Octavo semestre\Desarrollo web multi plantaforma\2do Parcial\Definitivo\Supermarket.Ecommerce\Supermarket.Ecommerce.Core\obj\Debug\net8.0\ref\Supermarket.Ecommerce.Core.dll
+C:\Universidad\Octavo semestre\Desarrollo web multi plantaforma\2do Parcial\Definitivo\Supermarket.Ecommerce\Supermarket.Ecommerce.Core\obj\Debug\net8.0\Supermarket.Ecommerce.Core.sourcelink.json
+C:\Universidad\Octavo semestre\Desarrollo web multi plantaforma\2do Parcial\Definitivo\Supermarket.Ecommerce\Supermarket.Ecommerce.Core\obj\Debug\net8.0\Supermarket.Ecommerce.Core.csproj.AssemblyReference.cache

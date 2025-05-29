@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Ne7tNcfhmhE=",
+  "dgSpecHash": "qlfEMLz3uRI=",
   "success": true,
   "projectFilePath": "C:\\Universidad\\Octavo semestre\\Desarrollo web multi plantaforma\\2do Parcial\\Definitivo\\Supermarket.Ecommerce\\Supermarket.Ecommerce.Core\\Supermarket.Ecommerce.Core.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\brall\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

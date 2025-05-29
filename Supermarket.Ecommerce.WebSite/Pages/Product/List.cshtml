@@ -1,0 +1,297 @@
+@page
+@model Supermarket.Ecommerce.WebSite.Pages.Product.ListModel
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Productos";
+    var clientId = HttpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+}
+
+<style>
+    body {
+        background: #f5f7fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+        color: #000000;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        user-select: none;
+    }
+
+    .product-card {
+        display: flex;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        background: #fff;
+        overflow: hidden;
+        transition: transform 0.2s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    .product-img {
+        width: 160px;
+        height: 160px;
+        object-fit: contain;
+        background: #e0e7ff;
+        flex-shrink: 0;
+    }
+
+    .product-info {
+        flex: 1;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .product-info h5 {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.3rem;
+    }
+
+    .product-info p {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .product-price {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #3a9d23;
+    }
+
+    .btn-add-to-cart {
+        background: linear-gradient(135deg, #28a745, #218838);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 0.6rem 1.2rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-add-to-cart:hover {
+        background: linear-gradient(135deg, #218838, #1e7e34);
+        box-shadow: 0 6px 14px rgba(33, 136, 56, 0.35);
+        transform: scale(1.05);
+    }
+
+
+    .search-input {
+        margin-bottom: 1.5rem;
+    }
+</style>
+
+@Html.AntiForgeryToken()
+
+<div class="container py-5">
+    <h2>Catálogo de Productos</h2>
+
+    <div class="mb-4">
+        <input type="text" id="search-input" class="form-control search-input" placeholder="🔍 Buscar producto por nombre..." onkeyup="filterProducts()" />
+    </div>
+
+    <div class="mb-4 d-flex justify-content-end">
+        <a class="btn btn-success" href="/Product/Create">
+            <i class="fas fa-plus-circle"></i> Agregar nuevo producto
+        </a>
+    </div>
+
+
+    <div class="row">
+        <!-- Columna de productos -->
+        <div class="col-md-8">
+            @foreach (var product in Model.Products)
+            {
+                <div class="product-card" data-name="@product.Name.ToLower()">
+                    @if (!string.IsNullOrEmpty(product.MainImageUrl))
+                    {
+                        <img src="@product.MainImageUrl" alt="@product.Name" class="product-img" />
+                    }
+                    else
+                    {
+                        <div class="product-img d-flex align-items-center justify-content-center">
+                            <i class="fas fa-image fa-2x text-secondary"></i>
+                        </div>
+                    }
+
+                    <div class="product-info">
+                        <div>
+                            <h5>@product.Name</h5>
+                            <p>@product.Description</p>
+                            <p class="product-price">$@product.Price.ToString("N2")</p>
+                        </div>
+                        <button class="btn-add-to-cart"
+                                onclick="addToCart(@product.Id, '@product.Name.Replace("'", "\\'")', @product.Price.ToString("0.00").Replace(",", "."))">
+                            <i class="fas fa-cart-plus"></i> Agregar
+                        </button>
+
+                        <div class="mt-2 d-flex gap-2">
+                            <a asp-page="./Edit" asp-route-id="@product.Id" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+
+
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@product.Id" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Columna del carrito -->
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h5>🛒 Carrito de Compras</h5>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cant.</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="cart-body">
+                    <!-- Se llena dinámicamente -->
+                    </tbody>
+                </table>
+                <div class="mb-2">
+                    <strong>Total: $<span id="total-amount">0.00</span></strong>
+                </div>
+                <div class="mb-2">
+                    <label>Monto recibido:</label>
+                    <input type="number" id="client-payment" class="form-control" placeholder="Ej. 500" />
+                </div>
+                <button class="btn btn-success w-100" onclick="confirmPurchase()">Confirmar Compra</button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de Compra Exitosa -->
+    <div class="modal fade" id="purchaseSuccessModal" tabindex="-1" role="dialog" aria-labelledby="purchaseSuccessLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-3 shadow">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="purchaseSuccessLabel">Compra Exitosa</h5>
+                    <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="purchaseSuccessBody">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Scripts {
+    <script>
+        let cart = [];
+
+        function addToCart(id, name, price) {
+            price = parseFloat(price);
+            const existing = cart.find(p => p.id === id);
+            if (existing) {
+                existing.qty += 1;
+                existing.subtotal = existing.qty * existing.price;
+            } else {
+                cart.push({ id, name, price, qty: 1, subtotal: price });
+            }
+            renderCart();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(p => p.id !== id);
+            renderCart();
+        }
+
+        function renderCart() {
+            const tbody = document.getElementById('cart-body');
+            tbody.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(p => {
+                total += p.subtotal;
+                tbody.innerHTML += `
+            <tr>
+                <td>${p.name}</td>
+                <td>${p.qty}</td>
+                <td>$${p.subtotal.toFixed(2)}</td>
+                <td><button class="btn btn-sm btn-danger" onclick="removeFromCart(${p.id})">&times;</button></td>
+            </tr>`;
+            });
+
+            document.getElementById('total-amount').textContent = total.toFixed(2);
+        }
+
+        function confirmPurchase() {
+            const total = parseFloat(document.getElementById('total-amount').textContent);
+            const payment = parseFloat(document.getElementById('client-payment').value);
+
+            if (isNaN(payment) || payment < total) {
+                alert('El monto recibido es insuficiente.');
+                return;
+            }
+
+            const change = (payment - total).toFixed(2);
+
+            // Llenar contenido del modal
+            document.getElementById('purchaseSuccessBody').innerHTML = `
+        <p><strong>Total:</strong> $${total.toFixed(2)}</p>
+        <p><strong>Pago recibido:</strong> $${payment.toFixed(2)}</p>
+        <p><strong>Cambio:</strong> $${change}</p>
+    `;
+
+            // Mostrar modal
+            const modal = new bootstrap.Modal(document.getElementById('purchaseSuccessModal'));
+            modal.show();
+
+            // Limpiar carrito y formulario
+            cart = [];
+            renderCart();
+            document.getElementById('client-payment').value = '';
+        }
+
+
+        function filterProducts() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('.product-card');
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                if (name.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+}
+
+

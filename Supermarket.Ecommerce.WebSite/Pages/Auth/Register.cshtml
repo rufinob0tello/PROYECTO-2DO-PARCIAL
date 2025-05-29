@@ -1,0 +1,143 @@
+@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Registro de nuevo Usuario";
+}
+
+<style>
+    body {
+        background-color: #fff159; /* Amarillo ML */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .register-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .register-card {
+        background: white;
+        padding: 2.5rem 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 460px;
+        border: 1px solid #eee;
+    }
+
+    .register-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        text-align: center;
+        color: #333;
+        margin-bottom: 2rem;
+    }
+
+    label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.35rem;
+        display: block;
+    }
+
+    input.form-control {
+        border: 1.5px solid #dcdcdc;
+        border-radius: 8px;
+        padding: 0.6rem 0.8rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    input.form-control:focus {
+        border-color: #3483fa;
+        box-shadow: 0 0 0 2px rgba(52, 131, 250, 0.2);
+        outline: none;
+    }
+
+    .btn-primary {
+        background-color: #3483fa; /* Azul ML */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+
+    .btn-primary:hover {
+        background-color: #2968c8;
+    }
+
+    .btn-outline-secondary {
+        margin-top: 0.6rem;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-weight: 600;
+        width: 100%;
+        color: #3483fa;
+        border: 2px solid #3483fa;
+        background: transparent;
+        transition: all 0.3s ease;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .btn-outline-secondary:hover {
+        background: #3483fa;
+        color: white;
+    }
+
+    .text-danger {
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+</style>
+
+<div class="register-wrapper">
+    <div class="register-card">
+        <div class="register-title">Crear cuenta</div>
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Client.Username">Usuario*</label>
+                <input asp-for="Client.Username" class="form-control" required />
+                <span asp-validation-for="Client.Username" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Client.Phone">Teléfono*</label>
+                <input asp-for="Client.Phone" class="form-control" required />
+                <span asp-validation-for="Client.Phone" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Client.FirstName">Nombre</label>
+                <input asp-for="Client.FirstName" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Client.LastName">Apellido</label>
+                <input asp-for="Client.LastName" class="form-control" />
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">
+                    Registrarme
+                </button>
+                <a asp-page="/Auth/Login" class="btn btn-outline-secondary">
+                    Ya tengo cuenta
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

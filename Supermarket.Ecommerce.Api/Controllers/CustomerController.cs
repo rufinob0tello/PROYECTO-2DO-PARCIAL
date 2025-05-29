@@ -7,7 +7,7 @@ using Supermarket.Ecommerce.Core.Http;
 namespace Supermarket.Ecommerce.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/customers")]
 public class CustomerController : ControllerBase
 {
     private readonly ICustomerRepository _customerRepository;

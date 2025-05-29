@@ -10,23 +10,31 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Tiendita",
+        Version = "v1",
+        //Description = "Documentación de la API para la administración de clientes, productos y pedidos en StoreShoes."
+    });
+});
 
-//builder.Services.AddScoped<IProductCategoryRepository, InMemoryProductCategoryRepository>();
-builder.Services.AddSingleton<IProductCategoryRepository, ProductCategoryRepository>(); //cuando se hace una nueva solicitud se guarda en memoria
-builder.Services.AddSingleton<IProductRepository, ProductRepository>();
-builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
-builder.Services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
-builder.Services.AddSingleton<ISupplierRepository, SupplierRepository>();
-builder.Services.AddSingleton<IDbContext, DbContext>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+builder.Services.AddScoped<IDbContext, DbContext>();
+
 
 SqlMapperExtensions.TableNameMapper = entityType =>
 {
     var name = entityType.ToString();
-    if (name.Contains("Supermarket.Ecommerce.Core.Entities."))
-        name = name.Replace("Supermarket.Ecommerce.Core.Entities.", "");
+    if (name.Contains("StoreShoes.Ecommerce.Core.Entities."))
+        name = name.Replace("StoreShoes.Ecommerce.Core.Entities.", "");
     var letters = name.ToCharArray();
     letters[0] = char.ToUpper(letters[0]);
     return new string (letters);

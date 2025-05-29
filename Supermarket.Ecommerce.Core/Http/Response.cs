@@ -1,16 +1,14 @@
-using System.Runtime.InteropServices.JavaScript;
+using Newtonsoft.Json;
 
 namespace Supermarket.Ecommerce.Core.Http;
 
-public class Response<T> //Tipo generico, para que las respuestas sean de cualquier tipo
+public class Response<T>
 {
     public T Data { get; set; }
     public string Message { get; set; }
+    
     public List<string> Errors { get; set; } = new List<string>();
     
-    public Response(T data = default)
-    {
-        Data = data;
-    }
-    
+    public bool IsSuccess { get; set; }
+    public bool Success { get; set; }
 }

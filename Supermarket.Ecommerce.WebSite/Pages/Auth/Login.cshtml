@@ -1,0 +1,116 @@
+@page
+@model LoginModel
+
+<style>
+    body {
+        background-color: #f5f5f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .login-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: linear-gradient(to bottom right, #fffde7, #ffffff);
+    }
+
+    .login-card {
+        background: #ffffff;
+        padding: 2.5rem 2rem;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 420px;
+        border-top: 8px solid #ffe600;
+    }
+
+    .login-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-align: center;
+        color: #333;
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        font-weight: 600;
+        color: #4f4f4f;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    input.form-control {
+        border: 1.5px solid #dcdcdc;
+        border-radius: 8px;
+        padding: 0.7rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input.form-control:focus {
+        border-color: #3483fa;
+        box-shadow: 0 0 0 3px rgba(52, 131, 250, 0.15);
+        outline: none;
+    }
+
+    .btn-primary {
+        background-color: #3483fa;
+        border: none;
+        border-radius: 8px;
+        padding: 0.8rem;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #fff;
+        width: 100%;
+        margin-top: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #2968c8;
+    }
+
+    .register-prompt {
+        text-align: center;
+        font-size: 0.9rem;
+        margin-top: 1.8rem;
+        color: #555;
+    }
+
+    .register-prompt a {
+        color: #3483fa;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .register-prompt a:hover {
+        text-decoration: underline;
+        color: #2968c8;
+    }
+</style>
+
+
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="login-title">Iniciar Sesión</div>
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="LoginRequest.Username">Usuario</label>
+                <input asp-for="LoginRequest.Username" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label asp-for="LoginRequest.Phone">Teléfono</label>
+                <input asp-for="LoginRequest.Phone" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Ingresar</button>
+        </form>
+
+        <div class="register-prompt">
+            ¿No tienes cuenta?
+            <a asp-page="/Auth/Register">Regístrate aquí</a>
+        </div>
+    </div>
+</div>

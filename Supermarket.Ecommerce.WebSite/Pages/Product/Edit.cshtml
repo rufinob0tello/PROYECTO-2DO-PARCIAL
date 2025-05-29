@@ -1,0 +1,33 @@
+@page "{id:int}"
+@model Supermarket.Ecommerce.WebSite.Pages.Product.EditModel
+@{
+    ViewData["Title"] = "Editar Producto";
+}
+
+<h2>Editar producto</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Product.Id" />
+    <input type="hidden" asp-for="Product.CategoryId" />
+    <input type="hidden" asp-for="Product.BrandId" />
+
+    <div class="mb-3">
+        <label asp-for="Product.Name" class="form-label">Nombre</label>
+        <input asp-for="Product.Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Product.Description" class="form-label">Descripción</label>
+        <textarea asp-for="Product.Description" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Product.Price" class="form-label">Precio</label>
+        <input asp-for="Product.Price" class="form-control" type="number" step="0.01" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Product.MainImageUrl" class="form-label">URL de Imagen</label>
+        <input asp-for="Product.MainImageUrl" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <a asp-page="./List" class="btn btn-secondary">Cancelar</a>
+</form>

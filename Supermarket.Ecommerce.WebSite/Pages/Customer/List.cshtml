@@ -1,0 +1,43 @@
+@page
+@model Supermarket.Ecommerce.WebSite.Pages.Customer.ListModel
+
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Customers</h2>
+        <a asp-page="./Edit" class="btn btn-outline-success btn-sm">Add Customer</a>
+    </div>
+
+    <table class="table table-sm table-bordered">
+        <thead class="table-light">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Username</th>
+            <th class="text-end">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <p class="alert alert-info">Total clientes: @Model.Customers.Count</p>
+
+        @foreach (var customer in Model.Customers)
+        {
+            <tr>
+                <td>@customer.FirstName</td>
+                <td>@customer.LastName</td>
+                <td>@customer.Phone</td>
+                <td>@customer.Username</td>
+                <td class="text-end">
+                    <a asp-page="./Edit" asp-route-id="@customer.Id" class="btn btn-sm btn-link">Edit</a>
+                    <a asp-page="./Delete" asp-route-id="@customer.Id" class="btn btn-sm btn-link text-danger">Delete</a>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>
